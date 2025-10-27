@@ -267,12 +267,34 @@ function isAllowed(day) {
       door.classList.add('open');
     }
 
-    // show modal with placeholder link
-    modalTitle.innerText = 'Tür ' + day;
-    modalBody.innerHTML = 'Klicke auf "Öffnen", um das Geschenk zu sehen. (Platzhalter-Link)';
-    openLink.href = placeholders[day-1] || '#';
-    openLink.style.display = 'inline-block';
-    modal.style.display = 'flex';
+  // show modal with placeholder link
+modalTitle.innerText = 'Tür ' + day;
+
+// kleine festliche Zufallstexte 🎄
+const festiveMessages = [
+  '🔔<br>Klicke auf "Öffnen", um dein Geschenk zu entdecken!',
+  '🎁<br>Eine kleine Überraschung wartet auf dich!',
+  '✨<br>Lass dich überraschen – Frohe Vorweihnachtszeit!',
+  '❄️<br>Ein Glöckchen klingt, ein Lichtlein brennt – öffne dein Türchen!',
+  '🌟<br>Etwas Schönes verbirgt sich hinter diesem Türchen!'
+];
+
+// zufällige Nachricht auswählen
+const randomMessage = festiveMessages[Math.floor(Math.random() * festiveMessages.length)];
+
+// Glöckchensound abspielen 🔔
+const bell = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_3d1c3b7c16.mp3?filename=small-bell-ding-1048.mp3');
+bell.volume = 0.3; // leise und dezent
+bell.play().catch(() => {}); // Fehler ignorieren, falls Browser blockiert
+
+// Einblendeffekt per CSS aktivieren ✨
+modalBody.innerHTML = `<div class="fade-in">${randomMessage}</div>`;
+
+// Link anzeigen
+openLink.href = placeholders[day-1] || '#';
+openLink.style.display = 'inline-block';
+modal.style.display = 'flex';
+
   });
 
   closeBtn.addEventListener('click', ()=>{ modal.style.display='none'; });
