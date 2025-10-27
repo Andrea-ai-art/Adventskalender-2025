@@ -119,6 +119,57 @@
     transform: scale(1);
   }
 }
+<!-- ✨ Silber-Blaue Schneeflocken -->
+<style>
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: #cfe8ff; /* sanftes Eisblau */
+    font-size: 1.2em;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear forwards;
+    opacity: 0.85;
+    text-shadow:
+      0 0 10px rgba(180, 210, 255, 0.8),
+      0 0 20px rgba(220, 240, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4);
+    z-index: 9999;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      filter: hue-rotate(30deg);
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0.3;
+      filter: hue-rotate(60deg);
+    }
+  }
+</style>
+
+<script>
+  // ✨ Silberblaue Schneeflocken erzeugen
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = ['❄', '✻', '❅', '❆'][Math.floor(Math.random() * 4)];
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    snowflake.style.animationDuration = 6 + Math.random() * 8 + 's';
+    snowflake.style.fontSize = 10 + Math.random() * 14 + 'px';
+    document.body.appendChild(snowflake);
+    setTimeout(() => snowflake.remove(), 15000);
+  }
+
+  setInterval(createSnowflake, 500); // alle 0,5 Sekunden eine Flocke
+</script>
+  
 </style>
 </head>
 <body>
