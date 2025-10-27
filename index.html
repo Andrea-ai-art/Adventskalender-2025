@@ -392,61 +392,82 @@ modal.style.display = 'flex';
   } catch(e){
     console.warn('Audio not supported', e);
   }
-
+  
 })();
 </script>
- <style>
-  .snowflake {
-    position: fixed;
-    top: -50px;
-    color: #fff; /* Schneeflockenfarbe */
-    font-size: 1em; /* Startgröße, wird individuell angepasst */
-    z-index: 9999;
+<!-- Stelle sicher, dass dies innerhalb des body steht -->
+<div id="snowContainer"></div>
+
+<style>
+  #snowContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Klickbar bleibt alles darunter */
+    overflow: hidden;
+    z-index: 1000; /* Über allem anzeigen */
+  }
+
+  .flake {
+    position: absolute;
+    top: -2em; /* Start oberhalb des Bildschirms */
+    font-size: 1.2em;
+    color: #b0c4de;
     user-select: none;
-    pointer-events: none;
-    will-change: transform;
+    animation-name: fall, sway, rotate;
+    animation-timing-function: linear, ease-in-out, linear;
+    animation-iteration-count: 1, infinite, infinite;
+  }
+
+  /* Fallanimation */
+  @keyframes fall {
+    0% { transform: translateY(-2em); }
+    100% { transform: translateY(110vh); }
+  }
+
+  /* Seitliches Schweben */
+  @keyframes sway {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(15px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Leichte Drehung */
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
   }
 </style>
 
 <script>
-  const maxFlakes = 50; // Maximale Anzahl der Schneeflocken gleichzeitig
-  const flakes = [];
+  const snowContainer = document.getElementById('snowContainer');
+  const numFlakes = 40; // Anzahl der Schneeflocken
 
-  function createSnowflake() {
-    if(flakes.length >= maxFlakes) return;
-
+  for(let i = 0; i < numFlakes; i++){
     const flake = document.createElement('div');
-    flake.className = 'snowflake';
-    flake.innerText = '❄'; // Unicode-Schneeflocke
-    flake.style.left = Math.random() * window.innerWidth + 'px';
-    flake.style.fontSize = (12 + Math.random() * 24) + 'px';
-    flake.style.opacity = 0.5 + Math.random() * 0.5;
+    flake.className = 'flake';
+    flake.innerText = '❄';
 
-    const speed = 1 + Math.random() * 2;
-    const drift = Math.random() * 1.5 - 0.75; // leichte seitliche Bewegung
-    let top = -50;
+    // Zufällige horizontale Position
+    flake.style.left = Math.random() * 100 + 'vw';
 
-    document.body.appendChild(flake);
-    flakes.push(flake);
+    // Zufällige Größe
+    flake.style.fontSize = (12 + Math.random()*18) + 'px';
 
-    function fall() {
-      top += speed;
-      flake.style.top = top + 'px';
-      flake.style.left = (parseFloat(flake.style.left) + drift) + 'px';
-      if(top < window.innerHeight){
-        requestAnimationFrame(fall);
-      } else {
-        flake.remove();
-        flakes.splice(flakes.indexOf(flake), 1);
-      }
-    }
+    // Zufällige Fallgeschwindigkeit
+    const fallDuration = 5 + Math.random() * 10;
+    flake.style.animationDuration = `${fallDuration}s, ${2 + Math.random()*3}s, ${3 + Math.random()*3}s`;
 
-    fall();
+    // Zufälliger Start-Delay
+    flake.style.animationDelay = `${Math.random() * 5}s, 0s, 0s`;
+
+    snowContainer.appendChild(flake);
   }
-
-  // Alle 300ms neue Schneeflocke erzeugen
-  setInterval(createSnowflake, 300);
 </script>
+
 
 </body>
 </html>
