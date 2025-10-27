@@ -395,20 +395,58 @@ modal.style.display = 'flex';
 
 })();
 </script>
-  <script>
-  // ✨ Silberblaue Schneeflocken erzeugen
+ <style>
+  .snowflake {
+    position: fixed;
+    top: -50px;
+    color: #fff; /* Schneeflockenfarbe */
+    font-size: 1em; /* Startgröße, wird individuell angepasst */
+    z-index: 9999;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+  }
+</style>
+
+<script>
+  const maxFlakes = 50; // Maximale Anzahl der Schneeflocken gleichzeitig
+  const flakes = [];
+
   function createSnowflake() {
-    const snowflake = document.createElement('div');
-    snowflake.classList.add('snowflake');
-    snowflake.textContent = ['❄', '✻', '❅', '❆'][Math.floor(Math.random() * 4)];
-    snowflake.style.left = Math.random() * 100 + 'vw';
-    snowflake.style.animationDuration = 6 + Math.random() * 8 + 's';
-    snowflake.style.fontSize = 10 + Math.random() * 14 + 'px';
-    document.body.appendChild(snowflake);
-    setTimeout(() => snowflake.remove(), 15000);
+    if(flakes.length >= maxFlakes) return;
+
+    const flake = document.createElement('div');
+    flake.className = 'snowflake';
+    flake.innerText = '❄'; // Unicode-Schneeflocke
+    flake.style.left = Math.random() * window.innerWidth + 'px';
+    flake.style.fontSize = (12 + Math.random() * 24) + 'px';
+    flake.style.opacity = 0.5 + Math.random() * 0.5;
+
+    const speed = 1 + Math.random() * 2;
+    const drift = Math.random() * 1.5 - 0.75; // leichte seitliche Bewegung
+    let top = -50;
+
+    document.body.appendChild(flake);
+    flakes.push(flake);
+
+    function fall() {
+      top += speed;
+      flake.style.top = top + 'px';
+      flake.style.left = (parseFloat(flake.style.left) + drift) + 'px';
+      if(top < window.innerHeight){
+        requestAnimationFrame(fall);
+      } else {
+        flake.remove();
+        flakes.splice(flakes.indexOf(flake), 1);
+      }
+    }
+
+    fall();
   }
 
-  setInterval(createSnowflake, 500); // alle 0,5 Sekunden eine Flocke
+  // Alle 300ms neue Schneeflocke erzeugen
+  setInterval(createSnowflake, 300);
 </script>
+
 </body>
 </html>
