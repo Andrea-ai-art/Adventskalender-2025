@@ -442,33 +442,45 @@ modal.style.display = 'flex';
   }
 </style>
 
+<!-- Schneeflocken-Effekt -->
+<div id="snowContainer"></div>
+
 <script>
   const snowContainer = document.getElementById('snowContainer');
-  const numFlakes = 40; // Anzahl der Schneeflocken
+  const numFlakes = 50; // Anzahl der Schneeflocken
 
-  for(let i = 0; i < numFlakes; i++){
+  // Container fix über der Seite
+  snowContainer.style.position = 'fixed';
+  snowContainer.style.top = '0';
+  snowContainer.style.left = '0';
+  snowContainer.style.width = '100%';
+  snowContainer.style.height = '100%';
+  snowContainer.style.pointerEvents = 'none';
+  snowContainer.style.overflow = 'hidden';
+  snowContainer.style.zIndex = '9999';
+
+  // Schneeflocken erzeugen
+  for (let i = 0; i < numFlakes; i++) {
     const flake = document.createElement('div');
     flake.className = 'snowflake';
-    flake.innerText = '❄';
+    flake.textContent = '❄';
 
-    // Zufällige horizontale Position
+    // zufällige horizontale Position
     flake.style.left = Math.random() * 100 + 'vw';
 
-    // Zufällige Größe
-    flake.style.fontSize = (12 + Math.random()*18) + 'px';
+    // zufällige Startposition oberhalb des Bildschirms
+    flake.style.top = -(Math.random() * 20) + 'vh';
 
-    // Zufällige Fallgeschwindigkeit
-    const fallDuration = 5 + Math.random() * 10;
-    flake.style.animationDuration = `${fallDuration}s, ${2 + Math.random()*3}s, ${3 + Math.random()*3}s`;
+    // zufällige Größe
+    flake.style.fontSize = (12 + Math.random() * 18) + 'px';
 
-    // Zufälliger Start-Delay
-    flake.style.animationDelay = `${Math.random() * 5}s, 0s, 0s`;
+    // Animation mit unterschiedlichen Geschwindigkeiten & Verzögerungen
+    flake.style.animationDuration = (5 + Math.random() * 10) + 's';
+    flake.style.animationDelay = Math.random() * 5 + 's';
 
     snowContainer.appendChild(flake);
   }
 </script>
-
-<div id="snowContainer"></div>
-
+ 
 </body>
 </html>
