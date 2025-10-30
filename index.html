@@ -413,16 +413,17 @@ modal.style.display = 'flex';
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; 
+    pointer-events: none;
     overflow: hidden;
-    z-index: 9999; /* über allem */
+    z-index: 9999;
   }
 
   .snowflake {
     position: absolute;
+    top: 0; /* Start oben */
+    font-size: 1.2em;
     color: #b0c4de;
     user-select: none;
-    font-size: 1.2em;
     pointer-events: none;
     animation-name: fall, sway, rotate;
     animation-timing-function: linear, ease-in-out, linear;
@@ -430,7 +431,7 @@ modal.style.display = 'flex';
   }
 
   @keyframes fall {
-    0% { transform: translateY(-2em); }
+    0% { transform: translateY(0); }
     100% { transform: translateY(110vh); }
   }
 
@@ -451,32 +452,30 @@ modal.style.display = 'flex';
 const snowContainer = document.getElementById('snowContainer');
 const numFlakes = 50;
 
-for(let i = 0; i < numFlakes; i++){
+for(let i=0; i<numFlakes; i++){
   const flake = document.createElement('div');
   flake.className = 'snowflake';
   flake.textContent = '❄';
 
-  // zufällige Position & Größe
+  // Zufällige horizontale Position
   flake.style.left = Math.random() * 100 + 'vw';
-  flake.style.top = -10 - Math.random() * 50 + 'px';
-  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
 
-  // unterschiedliche Animationsdauer & Delay
-  const fallDuration = 5 + Math.random() * 10;
-  const swayDuration = 2 + Math.random() * 3;
-  const rotateDuration = 3 + Math.random() * 3;
+  // Zufällige Größe
+  flake.style.fontSize = (12 + Math.random()*18) + 'px';
 
-  flake.style.animation = 
-    `fall ${fallDuration}s linear infinite, ` +
-    `sway ${swayDuration}s ease-in-out infinite, ` +
-    `rotate ${rotateDuration}s linear infinite`;
+  // Animationsdauer & Delay
+  const fallDuration = 5 + Math.random()*10;
+  const swayDuration = 2 + Math.random()*3;
+  const rotateDuration = 3 + Math.random()*3;
+  const delay = Math.random()*5;
 
-  const delay = Math.random() * 5;
-  flake.style.animationDelay = `${delay}s, ${delay}s, ${delay}s`;
+  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
+                           sway ${swayDuration}s ease-in-out infinite ${delay}s, 
+                           rotate ${rotateDuration}s linear infinite ${delay}s`;
 
   snowContainer.appendChild(flake);
 }
 </script>
- 
+
 </body>
 </html>
