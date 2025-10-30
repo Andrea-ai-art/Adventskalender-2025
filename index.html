@@ -401,47 +401,45 @@ modal.style.display = 'flex';
   }
   
 })();
+  
 </script>
-<!-- Stelle sicher, dass dies innerhalb des body steht -->
+<!-- Einziger Container -->
 <div id="snowContainer"></div>
 
 <style>
   #snowContainer {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Klickbar bleibt alles darunter */
+    pointer-events: none; 
     overflow: hidden;
-    z-index: 1000; /* Über allem anzeigen */
+    z-index: 9999; /* über allem */
   }
 
-  .flake {
+  .snowflake {
     position: absolute;
-    top: -2em; /* Start oberhalb des Bildschirms */
-    font-size: 1.2em;
     color: #b0c4de;
     user-select: none;
+    font-size: 1.2em;
+    pointer-events: none;
     animation-name: fall, sway, rotate;
     animation-timing-function: linear, ease-in-out, linear;
-    animation-iteration-count: 1, infinite, infinite;
+    animation-iteration-count: infinite, infinite, infinite;
   }
 
-  /* Fallanimation */
   @keyframes fall {
     0% { transform: translateY(-2em); }
     100% { transform: translateY(110vh); }
   }
 
-  /* Seitliches Schweben */
   @keyframes sway {
     0% { transform: translateX(0); }
     50% { transform: translateX(15px); }
     100% { transform: translateX(0); }
   }
 
-  /* Leichte Drehung */
   @keyframes rotate {
     0% { transform: rotate(0deg); }
     50% { transform: rotate(180deg); }
@@ -449,44 +447,35 @@ modal.style.display = 'flex';
   }
 </style>
 
-<!-- Schneeflocken-Effekt -->
-<div id="snowContainer"></div>
-
 <script>
-  const snowContainer = document.getElementById('snowContainer');
-  const numFlakes = 50; // Anzahl der Schneeflocken
+const snowContainer = document.getElementById('snowContainer');
+const numFlakes = 50;
 
-  // Container fix über der Seite
-  snowContainer.style.position = 'fixed';
-  snowContainer.style.top = '0';
-  snowContainer.style.left = '0';
-  snowContainer.style.width = '100%';
-  snowContainer.style.height = '100%';
-  snowContainer.style.pointerEvents = 'none';
-  snowContainer.style.overflow = 'hidden';
-  snowContainer.style.zIndex = '9999';
+for(let i = 0; i < numFlakes; i++){
+  const flake = document.createElement('div');
+  flake.className = 'snowflake';
+  flake.textContent = '❄';
 
-  // Schneeflocken erzeugen
-  for (let i = 0; i < numFlakes; i++) {
-    const flake = document.createElement('div');
-    flake.className = 'snowflake';
-    flake.textContent = '❄';
+  // zufällige Position & Größe
+  flake.style.left = Math.random() * 100 + 'vw';
+  flake.style.top = -10 - Math.random() * 50 + 'px';
+  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
 
-    // zufällige horizontale Position
-    flake.style.left = Math.random() * 100 + 'vw';
+  // unterschiedliche Animationsdauer & Delay
+  const fallDuration = 5 + Math.random() * 10;
+  const swayDuration = 2 + Math.random() * 3;
+  const rotateDuration = 3 + Math.random() * 3;
 
-    // zufällige Startposition oberhalb des Bildschirms
-    flake.style.top = -(Math.random() * 20) + 'vh';
+  flake.style.animation = 
+    `fall ${fallDuration}s linear infinite, ` +
+    `sway ${swayDuration}s ease-in-out infinite, ` +
+    `rotate ${rotateDuration}s linear infinite`;
 
-    // zufällige Größe
-    flake.style.fontSize = (12 + Math.random() * 18) + 'px';
+  const delay = Math.random() * 5;
+  flake.style.animationDelay = `${delay}s, ${delay}s, ${delay}s`;
 
-    // Animation mit unterschiedlichen Geschwindigkeiten & Verzögerungen
-    flake.style.animationDuration = (5 + Math.random() * 10) + 's';
-    flake.style.animationDelay = Math.random() * 5 + 's';
-
-    snowContainer.appendChild(flake);
-  }
+  snowContainer.appendChild(flake);
+}
 </script>
  
 </body>
