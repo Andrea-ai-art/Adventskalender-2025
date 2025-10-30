@@ -121,46 +121,7 @@
 }
 </style>
 
-  /* Schneeflocken Container */
-#snowContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Klicks gehen durch */
-  overflow: hidden;
-  z-index: 9999; /* über allem */
-}
-
-/* Schneeflocken-Stil */
-.snowflake {
-  position: absolute;
-  top: -2em;
-  color: #cfe8ff;
-  font-size: 1.2em;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.85;
-  animation-name: fall, sway;
-  animation-timing-function: linear, ease-in-out;
-  animation-iteration-count: infinite, infinite;
-}
-
-/* Fallanimation */
-@keyframes fall {
-  0% { transform: translateY(-2em); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0.3; }
-}
-
-/* Seitliches Schweben */
-@keyframes sway {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(15px); }
-  100% { transform: translateX(0); }
-}
-
-  
+ 
 </head>
 <body>
   <div id="snowContainer"></div>
@@ -406,6 +367,46 @@ modal.style.display = 'flex';
   
 </script>
 <script>
+
+  /* Schneeflocken Container */
+#snowContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Klicks gehen durch */
+  overflow: hidden;
+  z-index: 9999; /* über allem */
+}
+
+/* Schneeflocken-Stil */
+.snowflake {
+  position: absolute;
+  top: -2em;
+  color: #cfe8ff;
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+/* Fallanimation */
+@keyframes fall {
+  0% { transform: translateY(-2em); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0.3; }
+}
+
+/* Seitliches Schweben */
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}
+  
 const snowContainer = document.getElementById('snowContainer');
 const numFlakes = 50; // Anzahl der Schneeflocken
 
