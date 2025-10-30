@@ -404,23 +404,25 @@ modal.style.display = 'flex';
   
 </script>
 <!-- Einziger Container -->
+<!-- Schneeflocken Container direkt unter <body> -->
 <div id="snowContainer"></div>
 
 <style>
+  /* Container fix über dem gesamten Bildschirm */
   #snowContainer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 9999;
+    pointer-events: none; /* Klicks gehen durch */
+    overflow: visible;
+    z-index: 9999; /* Über allem */
   }
 
   .snowflake {
     position: absolute;
-    top: 0; /* Start oben */
+    top: -2em; /* Start leicht oberhalb */
     font-size: 1.2em;
     color: #b0c4de;
     user-select: none;
@@ -431,19 +433,19 @@ modal.style.display = 'flex';
   }
 
   @keyframes fall {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(110vh); }
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(110vh); } /* über volle Höhe */
   }
 
   @keyframes sway {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(15px); }
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(20px); }
     100% { transform: translateX(0); }
   }
 
   @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(180deg); }
     100% { transform: rotate(360deg); }
   }
 </style>
@@ -457,17 +459,14 @@ for(let i=0; i<numFlakes; i++){
   flake.className = 'snowflake';
   flake.textContent = '❄';
 
-  // Zufällige horizontale Position
   flake.style.left = Math.random() * 100 + 'vw';
-
-  // Zufällige Größe
   flake.style.fontSize = (12 + Math.random()*18) + 'px';
 
-  // Animationsdauer & Delay
+  // Zufällige Animationsdauer & Delay
   const fallDuration = 5 + Math.random()*10;
   const swayDuration = 2 + Math.random()*3;
   const rotateDuration = 3 + Math.random()*3;
-  const delay = Math.random()*5;
+  const delay = Math.random() * 5;
 
   flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
                            sway ${swayDuration}s ease-in-out infinite ${delay}s, 
