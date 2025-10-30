@@ -121,8 +121,50 @@
 }
 </style>
 
+  /* Schneeflocken Container */
+#snowContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Klicks gehen durch */
+  overflow: hidden;
+  z-index: 9999; /* über allem */
+}
+
+/* Schneeflocken-Stil */
+.snowflake {
+  position: absolute;
+  top: -2em;
+  color: #cfe8ff;
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+/* Fallanimation */
+@keyframes fall {
+  0% { transform: translateY(-2em); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0.3; }
+}
+
+/* Seitliches Schweben */
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}
+
+  
 </head>
 <body>
+  <div id="snowContainer"></div>
+
   <div class="wrap">
     <header>
       <div style="width:62px;height:62px;border-radius:12px;background:linear-gradient(135deg,#fff,#eaf6ff);display:flex;align-items:center;justify-content:center;border:1px solid rgba(200,220,230,0.9);box-shadow:0 6px 18px rgba(0,0,0,0.04)">
@@ -363,7 +405,34 @@ modal.style.display = 'flex';
 })();
   
 </script>
+<script>
+const snowContainer = document.getElementById('snowContainer');
+const numFlakes = 50; // Anzahl der Schneeflocken
 
+for (let i = 0; i < numFlakes; i++) {
+  const flake = document.createElement('div');
+  flake.className = 'snowflake';
+  flake.textContent = '❄';
+
+  // Zufällige horizontale Position
+  flake.style.left = Math.random() * 100 + 'vw';
+
+  // Zufällige Größe
+  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
+
+  // Zufällige Animationsdauer & Delay
+  const fallDuration = 5 + Math.random() * 10; // Fallgeschwindigkeit
+  const swayDuration = 2 + Math.random() * 4;  // Schweben
+  const delay = Math.random() * 5;
+
+  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
+                           sway ${swayDuration}s ease-in-out infinite ${delay}s`;
+
+  snowContainer.appendChild(flake);
+}
+</script>
+
+  
 </body>
 </html>
 
