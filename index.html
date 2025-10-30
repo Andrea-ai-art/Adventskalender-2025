@@ -119,39 +119,46 @@
     transform: scale(1);
   }
 }
-<!-- ✨ Silber-Blaue Schneeflocken -->
+/* ❄ Schneeflocken-Stil */
+#snowContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none; /* nichts blockieren */
+  z-index: 9999; /* über allem, aber nicht klick-blockierend */
+}
 
-  .snowflake {
-    position: fixed;
-    top: -10px;
-    color: #cfe8ff; /* sanftes Eisblau */
-    font-size: 1.2em;
-    user-select: none;
-    pointer-events: none;
-    animation: fall linear forwards;
-    opacity: 0.85;
-    text-shadow:
-      0 0 10px rgba(180, 210, 255, 0.8),
-      0 0 20px rgba(220, 240, 255, 0.6),
-      0 0 30px rgba(255, 255, 255, 0.4);
-    z-index: 9999;
-  }
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: #cfe8ff; /* sanftes Eisblau */
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  animation: fall linear infinite, sway ease-in-out infinite;
+  text-shadow:
+    0 0 10px rgba(180, 210, 255, 0.8),
+    0 0 20px rgba(220, 240, 255, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.4);
+}
 
-  @keyframes fall {
-    0% {
-      transform: translateY(0) rotate(0deg);
-      opacity: 1;
-      filter: hue-rotate(0deg);
-    }
-    50% {
-      filter: hue-rotate(30deg);
-    }
-    100% {
-      transform: translateY(110vh) rotate(360deg);
-      opacity: 0.3;
-      filter: hue-rotate(60deg);
-    }
-  }
+/* vertikaler Fall */
+@keyframes fall {
+  0% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0.3; }
+}
+
+/* leichtes Hin-und-Her-Schwingen */
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
 </style>
 
 </head>
