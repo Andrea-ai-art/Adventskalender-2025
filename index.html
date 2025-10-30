@@ -119,56 +119,14 @@
     transform: scale(1);
   }
 }
-
-/* HIER STARTET DER KORRIGIERTE CODE FÜR SCHNEE (MUSS HIER IM <style> BLOCK STEHEN) */
-
-/* Schneeflocken Container */
-#snowContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Wichtig, damit der Kalender klickbar bleibt */
-  overflow: hidden;
-  z-index: 9999; /* Sehr hoch, damit sie über allem liegen */
-}
-
-/* Schneeflocken-Stil */
-.snowflake {
-  position: absolute;
-  top: -2em;
-  color: #cfe8ff; /* Helle Farbe, damit sie sichtbar sind */
-  font-size: 1.2em;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.85;
-  /* Die 'animation' wird per JavaScript gesetzt, aber die Namen definieren wir hier */
-  animation-name: fall, sway; 
-  animation-timing-function: linear, ease-in-out;
-  animation-iteration-count: infinite, infinite;
-}
-
-/* 1. Fallanimation (von oben nach unten) */
-@keyframes fall {
-  0% { transform: translateY(-2em); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0.3; } /* 110vh = über den gesamten Bildschirm */
-}
-
-/* 2. Seitliches Schweben (Windeffekt) */
-@keyframes sway {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(15px); }
-  100% { transform: translateX(0); }
-}
-/* HIER ENDET DER KORRIGIERTE CSS CODE FÜR SCHNEE */
-
 </style>
 
  
 </head>
 <body>
-  <div id="snowContainer"></div>   <div class="wrap">
+  <div id="snowContainer"></div>
+
+  <div class="wrap">
     <header>
       <div style="width:62px;height:62px;border-radius:12px;background:linear-gradient(135deg,#fff,#eaf6ff);display:flex;align-items:center;justify-content:center;border:1px solid rgba(200,220,230,0.9);box-shadow:0 6px 18px rgba(0,0,0,0.04)">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.3 4.7L19 8l-3.4 2.6L16.6 15 12 12.7 7.4 15l1-4.4L5 8l4.7-1.3L12 2z" fill="#3b6ea5"/></svg>
@@ -182,7 +140,8 @@
 
     <div class="frame">
       <div class="calendar" id="calendar">
-              </div>
+        <!-- 24 doors will be injected by JS -->
+      </div>
 
       <div class="hint">Tipp: Die Türchen öffnen sich automatisch am jeweiligen Datum. Bereits geöffnete Türchen bleiben offen.</div>
     </div>
@@ -192,7 +151,8 @@
     </footer>
   </div>
 
-    <div class="modal" id="modal">
+  <!-- modal -->
+  <div class="modal" id="modal">
     <div class="box">
       <h3 id="modalTitle">Tür</h3>
       <p id="modalBody">Inhalt</p>
@@ -404,37 +364,73 @@ modal.style.display = 'flex';
   }
   
 })();
+  
 </script>
-
 <script>
-/* HIER STARTET DER KORRIGIERTE CODE FÜR SCHNEE (NUR JAVASCRIPT) */
 
+ 
 const snowContainer = document.getElementById('snowContainer');
 const numFlakes = 50; // Anzahl der Schneeflocken
 
 for (let i = 0; i < numFlakes; i++) {
   const flake = document.createElement('div');
   flake.className = 'snowflake';
-  flake.textContent = '❄'; // Unicode-Schneeflocke
+  flake.textContent = '❄';
 
   // Zufällige horizontale Position
   flake.style.left = Math.random() * 100 + 'vw';
 
+  // Zufällige Größe
+  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
+
   // Zufällige Animationsdauer & Delay
-  const fallDuration = 5 + Math.random() * 10; // 5 bis 15 Sekunden Fallzeit
-  const swayDuration = 2 + Math.random() * 4;  // 2 bis 6 Sekunden für das Schweben
-  const delay = Math.random() * 5; // Startverzögerung
+  const fallDuration = 5 + Math.random() * 10; // Fallgeschwindigkeit
+  const swayDuration = 2 + Math.random() * 4;  // Schweben
+  const delay = Math.random() * 5;
 
-  // Setzt die beiden Animationen (fall und sway) gleichzeitig mit zufälligen Werten
-  flake.style.animation = `
-    fall ${fallDuration}s linear infinite ${delay}s, 
-    sway ${swayDuration}s ease-in-out infinite ${delay}s
-  `;
+  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
+                           sway ${swayDuration}s ease-in-out infinite ${delay}s`;
 
-  // Fügt die Flocke zum Container hinzu
   snowContainer.appendChild(flake);
 }
-/* HIER ENDET DER KORRIGIERTE JAVASCRIPT-CODE FÜR SCHNEE */
+    /* Schneeflocken Container */
+#snowContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Klicks gehen durch */
+  overflow: hidden;
+  z-index: 9999; /* über allem */
+}
+
+/* Schneeflocken-Stil */
+.snowflake {
+  position: absolute;
+  top: -2em;
+  color: #cfe8ff;
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+/* Fallanimation */
+@keyframes fall {
+  0% { transform: translateY(-2em); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0.3; }
+}
+
+/* Seitliches Schweben */
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}
 </script>
 
   
