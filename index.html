@@ -368,7 +368,32 @@ modal.style.display = 'flex';
 </script>
 <script>
 
-  /* Schneeflocken Container */
+ 
+const snowContainer = document.getElementById('snowContainer');
+const numFlakes = 50; // Anzahl der Schneeflocken
+
+for (let i = 0; i < numFlakes; i++) {
+  const flake = document.createElement('div');
+  flake.className = 'snowflake';
+  flake.textContent = '❄';
+
+  // Zufällige horizontale Position
+  flake.style.left = Math.random() * 100 + 'vw';
+
+  // Zufällige Größe
+  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
+
+  // Zufällige Animationsdauer & Delay
+  const fallDuration = 5 + Math.random() * 10; // Fallgeschwindigkeit
+  const swayDuration = 2 + Math.random() * 4;  // Schweben
+  const delay = Math.random() * 5;
+
+  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
+                           sway ${swayDuration}s ease-in-out infinite ${delay}s`;
+
+  snowContainer.appendChild(flake);
+}
+    /* Schneeflocken Container */
 #snowContainer {
   position: fixed;
   top: 0;
@@ -405,31 +430,6 @@ modal.style.display = 'flex';
   0% { transform: translateX(0); }
   50% { transform: translateX(15px); }
   100% { transform: translateX(0); }
-}
-  
-const snowContainer = document.getElementById('snowContainer');
-const numFlakes = 50; // Anzahl der Schneeflocken
-
-for (let i = 0; i < numFlakes; i++) {
-  const flake = document.createElement('div');
-  flake.className = 'snowflake';
-  flake.textContent = '❄';
-
-  // Zufällige horizontale Position
-  flake.style.left = Math.random() * 100 + 'vw';
-
-  // Zufällige Größe
-  flake.style.fontSize = (12 + Math.random() * 18) + 'px';
-
-  // Zufällige Animationsdauer & Delay
-  const fallDuration = 5 + Math.random() * 10; // Fallgeschwindigkeit
-  const swayDuration = 2 + Math.random() * 4;  // Schweben
-  const delay = Math.random() * 5;
-
-  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
-                           sway ${swayDuration}s ease-in-out infinite ${delay}s`;
-
-  snowContainer.appendChild(flake);
 }
 </script>
 
