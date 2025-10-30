@@ -119,6 +119,42 @@
     transform: scale(1);
   }
 }
+
+/* KORRIGIERTER SCHNEE-CODE (CSS) */
+#snowContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.snowflake {
+  position: absolute;
+  top: -2em;
+  color: #cfe8ff;
+  font-size: 1.2em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-2em); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0.3; }
+}
+
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}
 </style>
 
  
@@ -140,8 +176,7 @@
 
     <div class="frame">
       <div class="calendar" id="calendar">
-        <!-- 24 doors will be injected by JS -->
-      </div>
+              </div>
 
       <div class="hint">Tipp: Die Türchen öffnen sich automatisch am jeweiligen Datum. Bereits geöffnete Türchen bleiben offen.</div>
     </div>
@@ -151,8 +186,7 @@
     </footer>
   </div>
 
-  <!-- modal -->
-  <div class="modal" id="modal">
+    <div class="modal" id="modal">
     <div class="box">
       <h3 id="modalTitle">Tür</h3>
       <p id="modalBody">Inhalt</p>
@@ -160,8 +194,8 @@
         <a id="openLink" class="btn" target="_blank" rel="noopener">Öffnen</a>
         <button id="closeBtn" class="btn secondary">Schließen</button>
       </div>
+      </div>
     </div>
-  </div>
 
 <script>
 (function(){
@@ -364,72 +398,32 @@ modal.style.display = 'flex';
   }
   
 })();
-  
 </script>
-<script>
 
- 
+<script>
+// KORRIGIERTER SCHNEE-CODE (JAVASCRIPT)
 const snowContainer = document.getElementById('snowContainer');
-const numFlakes = 50; // Anzahl der Schneeflocken
+const numFlakes = 50; 
 
 for (let i = 0; i < numFlakes; i++) {
   const flake = document.createElement('div');
   flake.className = 'snowflake';
-  flake.textContent = '❄';
+  flake.textContent = '❄'; 
 
-  // Zufällige horizontale Position
   flake.style.left = Math.random() * 100 + 'vw';
-
-  // Zufällige Größe
   flake.style.fontSize = (12 + Math.random() * 18) + 'px';
 
-  // Zufällige Animationsdauer & Delay
-  const fallDuration = 5 + Math.random() * 10; // Fallgeschwindigkeit
-  const swayDuration = 2 + Math.random() * 4;  // Schweben
+  const fallDuration = 5 + Math.random() * 10;
+  const swayDuration = 2 + Math.random() * 4; 
   const delay = Math.random() * 5;
 
-  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
-                           sway ${swayDuration}s ease-in-out infinite ${delay}s`;
+  // Hier werden die Animationen zugewiesen, die oben in CSS definiert wurden.
+  flake.style.animation = `
+    fall ${fallDuration}s linear infinite ${delay}s, 
+    sway ${swayDuration}s ease-in-out infinite ${delay}s
+  `;
 
   snowContainer.appendChild(flake);
-}
-    /* Schneeflocken Container */
-#snowContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Klicks gehen durch */
-  overflow: hidden;
-  z-index: 9999; /* über allem */
-}
-
-/* Schneeflocken-Stil */
-.snowflake {
-  position: absolute;
-  top: -2em;
-  color: #cfe8ff;
-  font-size: 1.2em;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.85;
-  animation-name: fall, sway;
-  animation-timing-function: linear, ease-in-out;
-  animation-iteration-count: infinite, infinite;
-}
-
-/* Fallanimation */
-@keyframes fall {
-  0% { transform: translateY(-2em); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0.3; }
-}
-
-/* Seitliches Schweben */
-@keyframes sway {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(15px); }
-  100% { transform: translateX(0); }
 }
 </script>
 
