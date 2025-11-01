@@ -410,6 +410,7 @@ for (let i = 0; i < numFlakes; i++) {
   flake.className = 'snowflake';
   flake.textContent = '❄'; 
 
+  // Wichtig: Die Position wird zufällig über 100% (die gesamte Breite des Bildschirms) verteilt.
   flake.style.left = Math.random() * 100 + 'vw';
   flake.style.fontSize = (12 + Math.random() * 18) + 'px';
 
