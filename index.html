@@ -270,7 +270,7 @@
 function isAllowed(day) {
   // allow if current date >= day of Dec YEAR
   const allowedDate = new Date(YEAR, MONTH, day, 0, 0, 0);
-  return true; // Türchen öffnen sich bei Erreichen Datum // today >= allowedDate
+  return today >= allowedDate; // Türchen öffnen sich bei Erreichen Datum // wenn Türchen offen return true
 }
 
   // build UI
