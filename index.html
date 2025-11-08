@@ -408,73 +408,66 @@ modal.style.display = 'flex';
 <div id="snowContainer"></div>
 
 <style>
-  /* Container fix über dem gesamten Bildschirm */
   #snowContainer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Klicks gehen durch */
-    overflow: visible;
-    z-index: 9999; /* Über allem */
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
   }
 
   .snowflake {
     position: absolute;
-    top: -2em; /* Start leicht oberhalb */
-    font-size: 1.2em;
-    color: #b0c4de;
+    top: -10px;
+    color: #e4f0ff;
+    font-size: 1em;
+    opacity: 0.8;
     user-select: none;
     pointer-events: none;
-    animation-name: fall, sway, rotate;
-    animation-timing-function: linear, ease-in-out, linear;
-    animation-iteration-count: infinite, infinite, infinite;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    animation-name: snowFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 
-  @keyframes fall {
-    0%   { transform: translateY(0); }
-    100% { transform: translateY(110vh); } /* über volle Höhe */
-  }
-
-  @keyframes sway {
-    0%   { transform: translateX(0); }
-    50%  { transform: translateX(20px); }
-    100% { transform: translateX(0); }
-  }
-
-  @keyframes rotate {
-    0%   { transform: rotate(0deg); }
-    50%  { transform: rotate(180deg); }
-    100% { transform: rotate(360deg); }
+  @keyframes snowFall {
+    0% {
+      transform: translate3d(0, -10px, 0) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translate3d(20px, 50vh, 0) rotate(180deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate3d(-20px, 100vh, 0) rotate(360deg);
+      opacity: 0.3;
+    }
   }
 </style>
 
 <script>
 const snowContainer = document.getElementById('snowContainer');
-const numFlakes = 50;
+const numFlakes = 60;
 
-for(let i=0; i<numFlakes; i++){
+for (let i = 0; i < numFlakes; i++) {
   const flake = document.createElement('div');
   flake.className = 'snowflake';
   flake.textContent = '❄';
-
   flake.style.left = Math.random() * 100 + 'vw';
-  flake.style.fontSize = (12 + Math.random()*18) + 'px';
+  flake.style.fontSize = (10 + Math.random() * 20) + 'px';
 
-  // Zufällige Animationsdauer & Delay
-  const fallDuration = 5 + Math.random()*10;
-  const swayDuration = 2 + Math.random()*3;
-  const rotateDuration = 3 + Math.random()*3;
-  const delay = Math.random() * 5;
-
-  flake.style.animation = `fall ${fallDuration}s linear infinite ${delay}s, 
-                           sway ${swayDuration}s ease-in-out infinite ${delay}s, 
-                           rotate ${rotateDuration}s linear infinite ${delay}s`;
+  const duration = 6 + Math.random() * 10;
+  const delay = Math.random() * 8;
+  flake.style.animationDuration = `${duration}s`;
+  flake.style.animationDelay = `${delay}s`;
 
   snowContainer.appendChild(flake);
 }
 </script>
-
+  
 </body>
 </html>
